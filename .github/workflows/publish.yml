@@ -13,6 +13,8 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v6
 
@@ -36,5 +38,11 @@ jobs:
       - name: Pack
         run: dotnet pack src/${{ vars.PROJECT_NAME }} --no-restore --no-build --configuration Release -p:Version=${VERSION} --output ${{ env.PACKAGE_OUTPUT_DIR }}
 
+      - name: NuGet login
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ vars.NUGET_USER }}
+
       - name: Publish
-        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIR }}/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s ${{ vars.NUGET_SOURCE_URL }}
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIR }}/*.nupkg -k ${{ steps.login.outputs.NUGET_API_KEY }} -s ${{ vars.NUGET_SOURCE_URL }}
