@@ -11,4 +11,8 @@
       <PackageReference Include="Zwergenland.CleanMessageBus.Abstractions" Version="3.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="CleanMessageBus.Hosting.Tests" />
+    </ItemGroup>
+
 </Project>
