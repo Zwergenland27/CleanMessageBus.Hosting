@@ -47,6 +47,7 @@ public static class MessageBusServiceCollectionExtensions
         services.AddSingleton(_ => new EventHandlerRegistry());
         services.AddSingleton<TransportAccessor>();
         services.TryAddSingleton<IMessageSerializer>(_ => new SystemTextJsonMessageSerializer(jsonOptions));
+        services.TryAddSingleton<IEventPublisher, EventPublisher>();
         services.TryAddSingleton<IMessageReceiver, MessageReceiver>();
         services.AddHostedService<MessageBusHostedService>();
 
