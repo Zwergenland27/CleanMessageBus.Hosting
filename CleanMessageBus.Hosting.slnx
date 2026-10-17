@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CleanMessageBus.Hosting/CleanMessageBus.Hosting.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CleanMessageBus.Hosting.Tests/CleanMessageBus.Hosting.Tests.csproj" />
+  </Folder>
+</Solution>
