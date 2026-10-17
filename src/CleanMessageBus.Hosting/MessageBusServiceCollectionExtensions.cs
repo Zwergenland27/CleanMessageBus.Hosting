@@ -45,7 +45,10 @@ public static class MessageBusServiceCollectionExtensions
             retryPolicy));
 
         services.AddSingleton(_ => new EventHandlerRegistry());
+        services.AddSingleton<TransportAccessor>();
         services.TryAddSingleton<IMessageSerializer>(_ => new SystemTextJsonMessageSerializer(jsonOptions));
+        services.TryAddSingleton<IMessageReceiver, MessageReceiver>();
+        services.AddHostedService<MessageBusHostedService>();
 
         return services;
     }
