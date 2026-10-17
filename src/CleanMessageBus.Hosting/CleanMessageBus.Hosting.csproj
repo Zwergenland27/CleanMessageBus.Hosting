@@ -4,6 +4,19 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <PackageId>Zwergenland.CleanMessageBus.Hosting</PackageId>
+        <Title>CleanMessageBus.Hosting</Title>
+        <Company>Zwergenland</Company>
+        <Authors>Florian Königsmann</Authors>
+        <Product>CleanMessageBus</Product>
+        <Description>Minimal-API-style event handler registration, consume/publish pipelines and built-in OpenTelemetry instrumentation for CleanMessageBus.</Description>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/Zwergenland27/CleanMessageBus.Hosting</RepositoryUrl>
+        <PackageTags>Events; Messaging</PackageTags>
+        <PackageProjectUrl>https://github.com/Zwergenland27/CleanMessageBus.Hosting</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <GenerateDocumentationFile>True</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,6 +26,12 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="CleanMessageBus.Hosting.Tests" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="..\..\README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
     </ItemGroup>
 
 </Project>

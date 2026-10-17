@@ -1,0 +1,40 @@
+name: Deploy to NuGet
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - v*
+
+env:
+  PACKAGE_OUTPUT_DIR: ${{ github.workspace }}/${{ vars.PACKAGE_OUTPUT_DIR }}
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Get Version from tag
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          echo "Version: $VERSION"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Restore dependencies
+        run: dotnet restore src/${{ vars.PROJECT_NAME }}
+
+      - name: Build
+        run: dotnet build src/${{ vars.PROJECT_NAME }} --no-restore --configuration Release -p:Version=${VERSION}
+
+      - name: Pack
+        run: dotnet pack src/${{ vars.PROJECT_NAME }} --no-restore --no-build --configuration Release -p:Version=${VERSION} --output ${{ env.PACKAGE_OUTPUT_DIR }}
+
+      - name: Publish
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIR }}/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s ${{ vars.NUGET_SOURCE_URL }}
